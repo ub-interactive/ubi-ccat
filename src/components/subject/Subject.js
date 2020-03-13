@@ -14,8 +14,10 @@ class Subject extends React.Component {
 
         return (
             <div className="subject">
-                <div className="title">{this.props.title}</div>
-                <div className="course-items">
+                <div className="c-s-header">
+                    <div className="c-title1">{this.props.title}</div>
+                </div>
+                <div className="c-course-list-style-1">
                     {courseItems}
                 </div>
             </div>
