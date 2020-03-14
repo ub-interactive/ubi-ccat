@@ -1,6 +1,7 @@
 import React from 'react';
 import './Subject.css';
-import Course from "./Course";
+import Course from "../Course/Course";
+import SubjectDisplayStyle from "../../enums/SubjectDisplayStyle"
 
 class Subject extends React.Component {
     constructor(props) {
@@ -17,7 +18,10 @@ class Subject extends React.Component {
                 <div className="c-s-header">
                     <div className="c-title1">{this.props.title}</div>
                 </div>
-                <div className="c-course-list-style-1">
+                <div className={({
+                    [SubjectDisplayStyle.OneColumn]: "c-course-list-style-1",
+                    [SubjectDisplayStyle.TwoColumn]: "c-course-list-style-2"
+                })[this.props.displayStyle] || "c-course-list-style-1"}>
                     {courseItems}
                 </div>
             </div>

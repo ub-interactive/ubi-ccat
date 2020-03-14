@@ -1,5 +1,5 @@
 {
-  "name": "ubi-ccat-web",
+  "name": "ubi-ccat",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

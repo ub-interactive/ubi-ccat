@@ -7,8 +7,8 @@ class Course extends React.Component {
     }
 
     render() {
-        const tags = this.props.tags.map((tag) =>
-            <div key={tag} className="c-course-tag-item"><i className="iconf-hot"/>{tag}</div>
+        const tags = this.props.tags.map((tag, index) =>
+            <div key={index} className="c-course-tag-item"><i className="iconf-hot"/>{tag}</div>
         );
 
         return (
