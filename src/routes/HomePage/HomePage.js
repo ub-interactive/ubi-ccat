@@ -18,15 +18,34 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             banners: [],
-            subjects: []
+            subjects: [],
+            subjectIds: [],
+            loadedSubjectIdsIndex: null
         };
     }
 
     componentDidMount() {
-        const homePageContentRequest = "http://10.0.0.5:9000/api/web";
-        fetch(homePageContentRequest)
+        fetch("http://10.0.0.5:9000/api/web/h")
             .then(response => response.json())
-            .then(result => this.setState({...result.data}));
+            .then(result => this.setState((prevState, props) => ({...prevState, ...result.data})))
+            .then(r => this.loadSubject())
+    }
+
+    loadSubject() {
+        const subjectId = this.state.subjectIds.pop();
+        if (subjectId) {
+            console.log(`loading subject [${subjectId}]`);
+            this.setState((prevState, props) => ({
+                ...prevState,
+                subjectIds: this.state.subjectIds.filter(item => item !== subjectId)
+            }));
+            fetch("http://10.0.0.5:9000/api/web/h/s/" + subjectId)
+                .then(response => response.json())
+                .then(result => this.setState((prevState, props) => ({
+                    ...prevState,
+                    subjects: [...prevState.subjects, result.data]
+                })));
+        }
     }
 
     render() {
@@ -133,7 +152,7 @@ class HomePage extends React.Component {
                     {this.state.banners.length > 0 && <Slider {...sliderSettings}>{Slides}</Slider>}
                     {Categories}
                     {Hightlights}
-                    {this.state.subjects.length > 0 && Subjects}
+                    {Subjects}
                 </div>
                 {Footer}
             </div>
