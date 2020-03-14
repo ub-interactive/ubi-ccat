@@ -7,14 +7,17 @@ class SubjectPage extends React.Component {
 
     PageSize = 8;
 
+    SessionStorageKey = (subjectId) => `SUBJECT_PAGE_STATE_${subjectId}`;
+
     constructor(props) {
         super(props);
-        this.state = {
+        const cachedState = sessionStorage.getItem(this.SessionStorageKey(props.match.params.subjectId));
+        this.state = cachedState ? JSON.parse(cachedState) : {
             currPage: 1,
             hasMore: true,
             isLoading: false,
             courses: []
-        }
+        };
     }
 
     componentDidMount() {
@@ -35,7 +38,8 @@ class SubjectPage extends React.Component {
                     hasMore: prevState.currPage < result.data.page.pages,
                     isLoading: false,
                     courses: [...prevState.courses, ...result.data.courses]
-                })));
+                })))
+                .then(r => sessionStorage.setItem(this.SessionStorageKey(this.props.match.params.subjectId), JSON.stringify(this.state)));
         }
     };
 

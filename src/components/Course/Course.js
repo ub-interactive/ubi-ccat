@@ -1,5 +1,6 @@
 import React from 'react';
 import './Course.css';
+import {Link} from "react-router-dom";
 
 class Course extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Course extends React.Component {
         );
 
         return (
-            <div className="c-course-item-wrap">
+            <Link to={`/c/${this.props.courseId}`} className="c-course-item-wrap">
                 <div className="c-course-item">
                     <div className="head">
                         <picture className="co-ximg-cover head-img">
@@ -31,7 +32,7 @@ class Course extends React.Component {
                         <div className="action"></div>
                     </div>
                 </div>
-            </div>
+            </Link>
         );
     }
 }

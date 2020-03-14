@@ -18,9 +18,12 @@ class HomePage extends React.Component {
 
     PageSize = 1;
 
+    SessionStorageKey = "HOME_PAGE_STATE";
+
     constructor(props) {
         super(props);
-        this.state = {
+        const cachedState = sessionStorage.getItem(this.SessionStorageKey);
+        this.state = cachedState ? JSON.parse(cachedState) : {
             currPage: 1,
             hasMore: true,
             isLoading: false,
@@ -32,7 +35,7 @@ class HomePage extends React.Component {
     componentDidMount() {
         fetch("http://10.0.0.5:9000/api/web/h")
             .then(response => response.json())
-            .then(result => this.setState((prevState, props) => ({ ...result.data})))
+            .then(result => this.setState((prevState, props) => ({...result.data})))
             .then(r => this.loadMore())
     }
 
@@ -49,7 +52,8 @@ class HomePage extends React.Component {
                     hasMore: prevState.currPage < result.data.page.pages,
                     isLoading: false,
                     subjects: [...prevState.subjects, ...result.data.subjects]
-                })));
+                })))
+                .then(r => sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state)))
         }
     };
 
@@ -162,7 +166,8 @@ class HomePage extends React.Component {
                     {highlights}
                     {subjects}
                 </div>
-                <BottomDetector onPageBottom={this.loadMore} hasMore={this.state.hasMore} isLoading={this.state.isLoading}/>
+                <BottomDetector onPageBottom={this.loadMore} hasMore={this.state.hasMore}
+                                isLoading={this.state.isLoading}/>
                 {footer}
             </div>
         );
