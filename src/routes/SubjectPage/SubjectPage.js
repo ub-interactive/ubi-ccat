@@ -24,10 +24,12 @@ class SubjectPage extends React.Component {
     loadMore = () => {
         if (this.state.hasMore && !this.state.isLoading) {
             const url = `http://10.0.0.5:9000/api/web/s/${this.props.match.params.subjectId}?page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
+            this.setState((prevState, props) => ({
+                isLoading: true
+            }));
             fetch(url)
                 .then(res => res.json())
                 .then(result => this.setState((prevState, props) => ({
-                    ...prevState,
                     ...result.data,
                     currPage: prevState.currPage + 1,
                     hasMore: prevState.currPage < result.data.page.pages,

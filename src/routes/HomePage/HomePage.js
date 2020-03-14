@@ -32,7 +32,7 @@ class HomePage extends React.Component {
     componentDidMount() {
         fetch("http://10.0.0.5:9000/api/web/h")
             .then(response => response.json())
-            .then(result => this.setState((prevState, props) => ({...prevState, ...result.data})))
+            .then(result => this.setState((prevState, props) => ({ ...result.data})))
             .then(r => this.loadMore())
     }
 
@@ -40,13 +40,11 @@ class HomePage extends React.Component {
         if (this.state.hasMore && !this.state.isLoading) {
             const url = `http://10.0.0.5:9000/api/web/h/s?page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
             this.setState((prevState, props) => ({
-                ...prevState,
                 isLoading: true
             }));
             fetch(url)
                 .then(response => response.json())
                 .then(result => this.setState((prevState, props) => ({
-                    ...prevState,
                     currPage: prevState.currPage + 1,
                     hasMore: prevState.currPage < result.data.page.pages,
                     isLoading: false,
