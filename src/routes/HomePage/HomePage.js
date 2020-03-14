@@ -12,15 +12,20 @@ import iconCateSteam from "./icon-cate-steam.png";
 import iconHighlightBaby from "./icon-highlight-baby.png";
 import iconHighlightKid from "./icon-highlight-kid.png";
 import {Link} from "react-router-dom";
+import BottomDetector from "../../components/BottomDetector/BottomDetector";
 
 class HomePage extends React.Component {
+
+    PageSize = 1;
+
     constructor(props) {
         super(props);
         this.state = {
+            currPage: 1,
+            hasMore: true,
+            isLoading: false,
             banners: [],
-            subjects: [],
-            subjectIds: [],
-            loadedSubjectIdsIndex: null
+            subjects: []
         };
     }
 
@@ -28,37 +33,51 @@ class HomePage extends React.Component {
         fetch("http://10.0.0.5:9000/api/web/h")
             .then(response => response.json())
             .then(result => this.setState((prevState, props) => ({...prevState, ...result.data})))
-            .then(r => this.loadSubject())
+            .then(r => this.loadMore())
     }
 
-    loadSubject() {
-        const subjectId = this.state.subjectIds.pop();
-        if (subjectId) {
-            console.log(`loading subject [${subjectId}]`);
+    loadMore = () => {
+        if (this.state.hasMore && !this.state.isLoading) {
+            const url = `http://10.0.0.5:9000/api/web/h/s?page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
             this.setState((prevState, props) => ({
                 ...prevState,
-                subjectIds: this.state.subjectIds.filter(item => item !== subjectId)
+                isLoading: true
             }));
-            fetch("http://10.0.0.5:9000/api/web/h/s/" + subjectId)
+            fetch(url)
                 .then(response => response.json())
                 .then(result => this.setState((prevState, props) => ({
                     ...prevState,
-                    subjects: [...prevState.subjects, result.data]
+                    currPage: prevState.currPage + 1,
+                    hasMore: prevState.currPage < result.data.page.pages,
+                    isLoading: false,
+                    subjects: [...prevState.subjects, ...result.data.subjects]
                 })));
         }
-    }
+    };
 
     render() {
-        const SearchField = (
+        const searchField = (
             <a className="search-wrap" href="/search">
                 <div className="co-search-input">
-                    <i className="iconf-search"></i>
+                    <i className="iconf-search"/>
                     <input type="text" placeholder="点击搜索课程"/>
                 </div>
             </a>
         );
 
-        const Categories = (
+        const sliderSettings = {
+            dots: false,
+            arrows: false,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1
+        };
+        const slider = this.state.banners.length > 0 && <Slider {...sliderSettings}>{this.state.banners.map((banner) =>
+            <Link key={banner.coverUrl} to={"/s/" + banner.subjectId}><img src={banner.coverUrl}/></Link>
+        )}</Slider>;
+
+        const categories = (
             <section>
                 <div className="cate-list">
                     <div className="cate-item">
@@ -95,7 +114,7 @@ class HomePage extends React.Component {
             </section>
         );
 
-        const Hightlights = (
+        const highlights = (
             <section>
                 <div className="subject-list">
                     <div className="subject-item-wrap">
@@ -116,45 +135,37 @@ class HomePage extends React.Component {
             </section>
         );
 
-        const Subjects = this.state.subjects.map((subject) =>
+        const subjects = this.state.subjects.map((subject) =>
             <section key={subject.subjectId}><Subject {...subject}/></section>
         );
 
-        const Footer = (
-            <div className="co-footer-nav">
-                <a className="index current" href="/">
-                    <div className="icon icon-index"></div>
-                    <div className="item-name">首页</div>
-                </a>
-                <a className="purchased" href="/purchased">
-                    <div className="icon icon-purchased"></div>
-                    <div className="item-name">已购</div>
-                </a>
+        const footer = (
+            <div>
+                <div className="co-footer-nav">
+                    <a className="index current" href="/">
+                        <div className="icon icon-index"/>
+                        <div className="item-name">首页</div>
+                    </a>
+                    <a className="purchased" href="/purchased">
+                        <div className="icon icon-purchased"/>
+                        <div className="item-name">已购</div>
+                    </a>
+                </div>
+                <div className="co-footer-nav-placeholder"/>
             </div>
-        );
-
-        const sliderSettings = {
-            dots: false,
-            arrows: false,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        };
-        const Slides = this.state.banners.map((banner) =>
-            <div key={banner.coverUrl}><Link to={"/s/" + banner.subjectId}><img src={banner.coverUrl}/></Link></div>
         );
 
         return (
             <div className="p-index">
                 <div className="co-scroll-view">
-                    {SearchField}
-                    {this.state.banners.length > 0 && <Slider {...sliderSettings}>{Slides}</Slider>}
-                    {Categories}
-                    {Hightlights}
-                    {Subjects}
+                    {searchField}
+                    {slider}
+                    {categories}
+                    {highlights}
+                    {subjects}
                 </div>
-                {Footer}
+                <BottomDetector onPageBottom={this.loadMore} hasMore={this.state.hasMore} isLoading={this.state.isLoading}/>
+                {footer}
             </div>
         );
     }

@@ -1,0 +1,9 @@
+.co-load-status {
+    padding: 1em 0;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #bbb;
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 0 0 1px #fff;
+}

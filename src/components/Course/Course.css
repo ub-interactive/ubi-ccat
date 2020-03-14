@@ -8,11 +8,11 @@
 }
 
 .c-course-item:after {
+    left: 15px;
+    right: 15px;
     content: "";
     position: absolute;
-    left: 0;
     bottom: 0;
-    right: 0;
     height: 1px;
     background-color: #eee;
     transform-origin: 0 100%;

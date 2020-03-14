@@ -9,9 +9,7 @@ class Subject extends React.Component {
     }
 
     render() {
-        const courseItems = this.props.courses.map((course) =>
-            <Course key={course.courseId} {...course}/>
-        );
+        const Courses = this.props.courses.map(course => <Course key={course.courseId} {...course} />);
 
         return (
             <div className="subject">
@@ -21,9 +19,7 @@ class Subject extends React.Component {
                 <div className={({
                     [SubjectDisplayStyle.OneColumn]: "c-course-list-style-1",
                     [SubjectDisplayStyle.TwoColumn]: "c-course-list-style-2"
-                })[this.props.displayStyle] || "c-course-list-style-1"}>
-                    {courseItems}
-                </div>
+                })[this.props.displayStyle] || "c-course-list-style-1"}>{Courses}</div>
             </div>
         );
     }
