@@ -11,6 +11,7 @@ import iconCateQuality from "./icon-cate-quality.png";
 import iconCateSteam from "./icon-cate-steam.png";
 import iconHighlightBaby from "./icon-highlight-baby.png";
 import iconHighlightKid from "./icon-highlight-kid.png";
+import {Link} from "react-router-dom";
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -18,13 +19,14 @@ class HomePage extends React.Component {
         this.state = {
             banners: [],
             subjects: []
-        }
+        };
     }
 
     componentDidMount() {
-        fetch("http://10.0.0.5:9000/api/web")
-            .then((res) => res.json())
-            .then((result) => this.setState({...result.data}))
+        const homePageContentRequest = "http://10.0.0.5:9000/api/web";
+        fetch(homePageContentRequest)
+            .then(response => response.json())
+            .then(result => this.setState({...result.data}));
     }
 
     render() {
@@ -95,8 +97,8 @@ class HomePage extends React.Component {
             </section>
         );
 
-        const Subjects = this.state.subjects.map((subject, index) =>
-            <section><Subject key={index} {...subject}/></section>
+        const Subjects = this.state.subjects.map((subject) =>
+            <section key={subject.subjectId}><Subject {...subject}/></section>
         );
 
         const Footer = (
@@ -121,7 +123,7 @@ class HomePage extends React.Component {
             slidesToScroll: 1
         };
         const Slides = this.state.banners.map((banner) =>
-            <div key={banner.coverUrl}><img src={banner.coverUrl}/></div>
+            <div key={banner.coverUrl}><Link to={"/s/" + banner.subjectId}><img src={banner.coverUrl}/></Link></div>
         );
 
         return (
