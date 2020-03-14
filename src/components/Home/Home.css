@@ -67,7 +67,7 @@
 .p-index .subject-item {
     display: block;
     position: relative;
-    border-radius: .24rem;
+    border-radius: 10px;
     overflow: hidden;
 }
 
