@@ -2,6 +2,7 @@ import React from 'react';
 import './SubjectPage.css';
 import Subject from "../../components/Subject/Subject";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
+import Footer from "../../components/Footer/Footer";
 
 class SubjectPage extends React.Component {
 
@@ -48,6 +49,7 @@ class SubjectPage extends React.Component {
             <div className="p-subject">
                 <Subject {...this.state}/>
                 <BottomDetector onPageBottom={this.loadMore} hasMore={true} isLoading={this.state.isLoading}/>
+                <Footer/>
             </div>
         );
     }

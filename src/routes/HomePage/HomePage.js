@@ -13,6 +13,7 @@ import iconHighlightBaby from "./icon-highlight-baby.png";
 import iconHighlightKid from "./icon-highlight-kid.png";
 import {Link} from "react-router-dom";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
+import Footer from "../../components/Footer/Footer";
 
 class HomePage extends React.Component {
 
@@ -141,22 +142,6 @@ class HomePage extends React.Component {
             <section key={subject.subjectId}><Subject {...subject}/></section>
         );
 
-        const footer = (
-            <div>
-                <div className="co-footer-nav">
-                    <a className="index current" href="/">
-                        <div className="icon icon-index"/>
-                        <div className="item-name">首页</div>
-                    </a>
-                    <a className="purchased" href="/purchased">
-                        <div className="icon icon-purchased"/>
-                        <div className="item-name">已购</div>
-                    </a>
-                </div>
-                <div className="co-footer-nav-placeholder"/>
-            </div>
-        );
-
         return (
             <div className="p-index">
                 <div className="co-scroll-view">
@@ -168,7 +153,7 @@ class HomePage extends React.Component {
                 </div>
                 <BottomDetector onPageBottom={this.loadMore} hasMore={this.state.hasMore}
                                 isLoading={this.state.isLoading}/>
-                {footer}
+                <Footer/>
             </div>
         );
     }
