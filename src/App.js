@@ -1,11 +1,13 @@
-
 import React from 'react';
 import './App.css';
-import Home from "./components/home/Home";
+import HomePage from "./routes/HomePage/HomePage";
+import SubjectPage from "./routes/SubjectPage/SubjectPage";
 
 function App() {
     return (
-        <Home/>
+        // <HomePage/>
+        <SubjectPage/>
     );
-}lkhjjjklyuox
+}
+
 export default App;

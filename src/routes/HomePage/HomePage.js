@@ -1,7 +1,7 @@
 import React from 'react';
-import './Home.css';
+import './HomePage.css';
 import Slider from 'react-slick';
-import Subject from "../Subject/Subject";
+import Subject from "../../components/Subject/Subject";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import iconCateChinese from "./icon-cate-chinese.png";
@@ -12,7 +12,7 @@ import iconCateSteam from "./icon-cate-steam.png";
 import iconHighlightBaby from "./icon-highlight-baby.png";
 import iconHighlightKid from "./icon-highlight-kid.png";
 
-class Home extends React.Component {
+class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +22,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://10.0.0.5:9000/api/web/home")
+        fetch("http://10.0.0.5:9000/api/web")
             .then((res) => res.json())
             .then((result) => this.setState({...result.data}))
     }
@@ -139,4 +139,4 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+export default HomePage;
