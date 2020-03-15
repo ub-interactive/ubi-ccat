@@ -1,6 +1,5 @@
 import React from 'react';
 import './CoursePage.css';
-import {Link} from "react-router-dom";
 import ScrollableAnchor from 'react-scrollable-anchor'
 
 class CoursePage extends React.Component {
@@ -30,9 +29,13 @@ class CoursePage extends React.Component {
 
     handleScroll = () => {
         const cInfo = document.getElementsByClassName("c-info")[0];
-        const threshold = cInfo.offsetHeight + cInfo.offsetTop;
+        const courseIntro = document.getElementsByClassName("course-intro")[0];
+        const courseMenu = document.getElementsByClassName("course-menu")[0];
+        const courseInfo = document.getElementsByClassName("course-info")[0];
+
         this.setState({
-            fixedTabBar: window.pageYOffset >= threshold
+            fixedTabBar: window.pageYOffset >= (cInfo.offsetTop + cInfo.offsetHeight),
+            currentTab: window.pageYOffset >= courseIntro.offsetTop ? window.pageYOffset >= courseMenu.offsetTop ? window.pageYOffset >= courseInfo.offsetTop ? 2 : 1 : 0 : 0
         })
     };
 
@@ -80,14 +83,11 @@ class CoursePage extends React.Component {
                 <div className={`co-tab-view panel ${this.state.fixedTabBar ? "fixed" : ""}`}>
                     <div className="co-tab-view-tabs">
                         <a href="#course-intro"
-                              className={`co-tab-view-tab ${this.state.currentTab === 0 ? "current" : ""}`}
-                              onClick={() => this.setState({currentTab: 0})}><span>课程介绍</span></a>
+                           className={`co-tab-view-tab ${this.state.currentTab === 0 ? "current" : ""}`}><span>课程介绍</span></a>
                         <a href="#course-menu"
-                              className={`co-tab-view-tab ${this.state.currentTab === 1 ? "current" : ""}`}
-                              onClick={() => this.setState({currentTab: 1})}><span>课程目录</span></a>
+                           className={`co-tab-view-tab ${this.state.currentTab === 1 ? "current" : ""}`}><span>课程目录</span></a>
                         <a href="#course-info"
-                              className={`co-tab-view-tab ${this.state.currentTab === 2 ? "current" : ""}`}
-                              onClick={() => this.setState({currentTab: 2})}><span>课程须知</span></a>
+                           className={`co-tab-view-tab ${this.state.currentTab === 2 ? "current" : ""}`}><span>课程须知</span></a>
                     </div>
                 </div>
                 <ScrollableAnchor id="course-intro">
