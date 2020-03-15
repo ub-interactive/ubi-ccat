@@ -236,6 +236,11 @@
     margin-left: -6px;
 }
 
+.course-intro img, .course-menu img, .course-info img {
+    display: block;
+    width: 100%;
+}
+
 /** footer */
 .p-c .footer, .p-c .footer .btn-home {
     display: flex;
@@ -302,9 +307,6 @@
     color: #fff;
     font-weight: bolder;
     height: 50px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-orient: vertical;
     flex-direction: column;
@@ -316,3 +318,6 @@
     white-space: nowrap;
 }
 
+.p-c .footer-placeholder {
+    height: 60px;
+}
