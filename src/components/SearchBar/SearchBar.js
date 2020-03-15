@@ -41,7 +41,7 @@ class SearchBar extends React.Component {
 
     render() {
         const historySearch = this.state.history.map(item => <div key={item} className="his-item"
-                                                                  onClick={() => this.onKeywordChange(item)}>{item}</div>);
+                                                                  onClick={() => this.onKeywordChange(item, 100)}>{item}</div>);
 
         return <div className="co-search">
             <div className="search-wrap">
