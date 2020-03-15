@@ -15,7 +15,6 @@ import {Link} from "react-router-dom";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
 import Footer from "../../components/Footer/Footer";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import SearchPage from "../SearchPage/SearchPage";
 
 class HomePage extends React.Component {
 
@@ -138,7 +137,7 @@ class HomePage extends React.Component {
         return (
             <div className="p-index">
                 <div className="co-scroll-view">
-                    <Link to="/search"><SearchBar/></Link>
+                    <Link to="/search"><SearchBar isPlaceHolder/></Link>
                     {slider}
                     {categories}
                     {highlights}

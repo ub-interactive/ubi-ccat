@@ -3,12 +3,24 @@ import './SearchBar.css';
 
 class SearchBar extends React.Component {
 
+    SessionStorageKey = "SEARCH_BAR_STATE";
+
     constructor(props) {
         super(props);
-        this.state = {
+
+        const cachedState = sessionStorage.getItem(this.SessionStorageKey);
+        this.state = cachedState ? JSON.parse(cachedState) : {
             keyword: undefined,
             history: []
-        }
+        };
+    }
+
+    componentDidMount() {
+        this.onKeywordChange(this.state.keyword, 100)
+    }
+
+    componentWillUnmount() {
+        sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state))
     }
 
     onInputValueChange = (e) => {
@@ -16,15 +28,15 @@ class SearchBar extends React.Component {
         this.onKeywordChange(keyword)
     };
 
-    onKeywordChange = (keyword) => {
+    onKeywordChange = (keyword, timeout) => {
         this.setState({keyword: keyword});
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             keyword && this.setState((prevState, props) => ({
-                history: [...new Set([keyword, ...prevState.history])].slice(0, 5)
+                history: [...new Set([keyword, ...prevState.history])].slice(0, 7)
             }));
-            this.props.onKeywordChange(keyword)
-        }, 500);
+            this.props.onKeywordChange && this.props.onKeywordChange(keyword)
+        }, timeout || 1000);
     };
 
     render() {
@@ -35,12 +47,13 @@ class SearchBar extends React.Component {
             <div className="search-wrap">
                 <div className="co-search-input">
                     <i className="iconf-search"/>
-                    <input type="text" placeholder="点击搜索课程" value={this.state.keyword || ""}
-                           autoFocus={this.props.autoFocus}
-                           onChange={this.onInputValueChange}/>
+                    {this.props.isPlaceHolder ? <input type="text" placeholder="点击搜索课程"/> :
+                        <input type="text" placeholder="点击搜索课程" value={this.state.keyword || ""}
+                               autoFocus={this.props.autoFocus} onChange={this.onInputValueChange}/>}
                 </div>
             </div>
-            <div className="search-his" style={this.state.history.length > 0 ? {display: "block"} : {display: "none"}}>
+            {!this.props.isPlaceHolder && <div className="search-his"
+                                               style={this.state.history.length > 0 ? {display: "block"} : {display: "none"}}>
                 <div className="his-title">
                     <span className="his-title-t">搜索历史</span>
                     <span className="btn-clean" onClick={() => this.setState({history: []})}>清空</span>
@@ -48,7 +61,7 @@ class SearchBar extends React.Component {
                 <div className="his-list">
                     {historySearch}
                 </div>
-            </div>
+            </div>}
         </div>
     }
 }

@@ -13,6 +13,7 @@ class SearchPage extends React.Component {
             currPage: 1,
             hasMore: true,
             isLoading: false,
+            keyword: undefined,
             courses: []
         };
     }
@@ -21,14 +22,15 @@ class SearchPage extends React.Component {
         this.setState({
             currPage: 1,
             hasMore: true,
+            keyword: keyword,
             courses: []
         });
-        keyword.length > 0 && this.loadMore(keyword)
+        keyword.length > 0 && this.loadMore()
     };
 
-    loadMore = (keyword) => {
+    loadMore = () => {
         if (this.state.hasMore && !this.state.isLoading) {
-            const url = `http://10.0.0.5:9000/api/web/search?keyword=${keyword}&page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
+            const url = `http://10.0.0.5:9000/api/web/search?keyword=${this.state.keyword}&page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
             this.setState((prevState, props) => ({
                 isLoading: true
             }));
@@ -48,7 +50,7 @@ class SearchPage extends React.Component {
 
         return <div className="co-search">
             <div className="co-scroll-view">
-                <SearchBar keyword={this.state.keyword} onKeywordChange={this.onKeywordChange} autoFocus/>
+                <SearchBar keyword={this.state.keyword} onKeywordChange={this.onKeywordChange} autoFocus isPlaceHolder={false}/>
                 <div className="c-course-list-style-1">{Courses}</div>
                 <BottomDetector onPageBottom={this.loadMore} hasMore={this.state.hasMore}
                                 isLoading={this.state.isLoading}/>
