@@ -1,0 +1,102 @@
+.search-wrap {
+    display: block;
+    position: relative;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+
+.search-wrap:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.co-search-input {
+    flex-grow: 1;
+    background-color: #f5f6fa;
+    border-radius: 4px;
+    font-size: 12px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.co-search-input i {
+    font-weight: 700;
+    font-size: 16px;
+    color: #a5afbd;
+    padding: 10px;
+    width: 1em;
+}
+
+.co-search-input input {
+    z-index: 99;
+    flex-grow: 1;
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    color: #333;
+    padding: 0;
+}
+
+.co-search .search-his {
+    padding: 15px;
+    font-size: 14px;
+    color: #999;
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+.co-search .search-his .his-title {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.co-search .search-his .his-title-t {
+    font-size: 16px;
+}
+
+.co-search .search-his .btn-clean {
+    position: relative;
+}
+
+.co-search .search-his .btn-clean:after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+}
+
+.co-search .search-his .his-item {
+    z-index: 99;
+    background-color: #f5f6fa;
+    height: 2em;
+    line-height: 2em;
+    border-radius: 2em;
+    display: inline-block;
+    padding: 0 1em;
+    margin-top: 10px;
+    margin-right: 10px;
+    max-width: 2.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: top;
+}

@@ -1,82 +1,66 @@
+@font-face {
+    font-family: webfont;
+    font-display: swap;
+    src: url(./fonts/webfont.woff2) format("woff2")
+}
+
 body {
-  max-width: 640px;
-  width: 100%;
-  margin: 0 auto;
-  font-family: PingFang SC,Microsoft YaHei,webfont,tahoma;
-  font-size: 14px;
-  background-color: #fff;
-  color: #333;
-  -webkit-tap-highlight-color: transparent;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    font-family: PingFang SC, Microsoft YaHei, webfont, tahoma, serif;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .co-scroll-view {
-  overflow-y: auto;
-}
-
-.co-search-input {
-  flex-grow: 1;
-  background-color: #f5f6fa;
-  border-radius: 4px;
-  font-size: 12px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.co-search-input i {
-  font-weight: 700;
-  font-size: 16px;
-  color: #a5afbd;
-  padding: 10px;
-  width: 1em;
-}
-
-.co-search-input input {
-  flex-grow: 1;
-  background-color: transparent;
-  height: 100%;
-  color: #333;
-  padding: 0;
+    overflow-y: auto;
 }
 
 .abs-100 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 .co-ximg-cover {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: text-bottom;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: text-bottom;
 }
 
 .co-ximg-cover > img {
-  width: 100%;
-  height: 100%;
-  vertical-align: top;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+    object-fit: cover;
+}
+
+@font-face {
+    font-family: iconfont;
+    src: url(./fonts/iconfont.woff) format("woff")
 }
 
 [class|=iconf] {
-  font-family: iconfont;
-  -webkit-font-smoothing: antialiased;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 400;
-  text-decoration: none;
-  text-transform: none;
+    font-family: iconfont;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: none;
 }
 
 .iconf-search:before {
-  content: "\E02D";
+    content: "\E02D";
 }
 

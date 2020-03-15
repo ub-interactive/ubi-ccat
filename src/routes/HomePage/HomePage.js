@@ -14,6 +14,8 @@ import iconHighlightKid from "./icon-highlight-kid.png";
 import {Link} from "react-router-dom";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
 import Footer from "../../components/Footer/Footer";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchPage from "../SearchPage/SearchPage";
 
 class HomePage extends React.Component {
 
@@ -59,15 +61,6 @@ class HomePage extends React.Component {
     };
 
     render() {
-        const searchField = (
-            <a className="search-wrap" href="/search">
-                <div className="co-search-input">
-                    <i className="iconf-search"/>
-                    <input type="text" placeholder="点击搜索课程"/>
-                </div>
-            </a>
-        );
-
         const sliderSettings = {
             dots: false,
             arrows: false,
@@ -145,7 +138,7 @@ class HomePage extends React.Component {
         return (
             <div className="p-index">
                 <div className="co-scroll-view">
-                    {searchField}
+                    <Link to="/search"><SearchBar/></Link>
                     {slider}
                     {categories}
                     {highlights}
