@@ -1,38 +1,43 @@
 import * as React from "react";
 import './SearchBar.css';
-import {Link} from "react-router-dom";
 
 class SearchBar extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            keyword: props.keyword,
+            keyword: undefined,
             history: []
         }
     }
 
-    onChange = (e) => {
+    onInputValueChange = (e) => {
         const keyword = e.target.value;
+        this.onKeywordChange(keyword)
+    };
+
+    onKeywordChange = (keyword) => {
         this.setState({keyword: keyword});
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             keyword && this.setState((prevState, props) => ({
-                history: [keyword, ...prevState.history].slice(0, 5)
+                history: [...new Set([keyword, ...prevState.history])].slice(0, 5)
             }));
             this.props.onKeywordChange(keyword)
         }, 500);
     };
 
     render() {
-        const historySearch = this.state.history.map(item => <Link key={item} to={`/search/${item}`}
-                                                                   className="his-item">{item}</Link>);
+        const historySearch = this.state.history.map(item => <div key={item} className="his-item"
+                                                                  onClick={() => this.onKeywordChange(item)}>{item}</div>);
 
         return <div className="co-search">
             <div className="search-wrap">
                 <div className="co-search-input">
                     <i className="iconf-search"/>
-                    <input type="text" placeholder="点击搜索课程" value={this.state.keyword} autoFocus={this.props.autoFocus} onChange={this.onChange}/>
+                    <input type="text" placeholder="点击搜索课程" value={this.state.keyword || ""}
+                           autoFocus={this.props.autoFocus}
+                           onChange={this.onInputValueChange}/>
                 </div>
             </div>
             <div className="search-his" style={this.state.history.length > 0 ? {display: "block"} : {display: "none"}}>
