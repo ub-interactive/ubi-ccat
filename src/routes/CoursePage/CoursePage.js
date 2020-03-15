@@ -58,7 +58,7 @@ class CoursePage extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="co-tab-view panel">
+                <div className="co-tab-view panel fixed">
                     <div className="co-tab-view-tabs">
                         <div className="co-tab-view-tab current"><span>课程介绍</span></div>
                         <div className="co-tab-view-tab"><span>课程目录</span></div>
@@ -68,6 +68,10 @@ class CoursePage extends React.Component {
                 <div className="intro-details"/>
                 <div className="co-c-intro">
                     {this.props.courseIntro}
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                 </div>
                 <div className="intro-dir">
                     {this.props.courseMenu}

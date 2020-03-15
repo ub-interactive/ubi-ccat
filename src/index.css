@@ -64,3 +64,6 @@ a {
     content: "\E02D";
 }
 
+.btn, [class|=btn] {
+    cursor: pointer;
+}
