@@ -25,7 +25,10 @@ class SearchPage extends React.Component {
             keyword: keyword,
             courses: []
         });
-        keyword.length > 0 && this.loadMore()
+
+        if (keyword && keyword.length > 0) {
+            this.loadMore()
+        }
     };
 
     loadMore = () => {
@@ -50,7 +53,8 @@ class SearchPage extends React.Component {
 
         return <div className="co-search">
             <div className="co-scroll-view">
-                <SearchBar keyword={this.state.keyword} onKeywordChange={this.onKeywordChange} autoFocus isPlaceHolder={false}/>
+                <SearchBar keyword={this.state.keyword} onKeywordChange={this.onKeywordChange} autoFocus
+                           isPlaceHolder={false}/>
                 <div className="c-course-list-style-1">{Courses}</div>
                 <BottomDetector onPageBottom={this.loadMore} hasMore={this.state.hasMore}
                                 isLoading={this.state.isLoading}/>

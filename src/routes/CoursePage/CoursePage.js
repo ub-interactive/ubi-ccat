@@ -14,14 +14,13 @@ class CoursePage extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener("scroll", this.handleScroll);
-
         const url = `http://10.0.0.5:9000/api/web/c/${this.props.match.params.courseId}`;
         fetch(url)
             .then(response => response.json())
             .then(result => this.setState((prevState, props) => ({
                 ...result.data
-            })));
+            })))
+            .then(r => window.addEventListener("scroll", this.handleScroll))
     }
 
     componentWillUnmount() {
@@ -41,7 +40,7 @@ class CoursePage extends React.Component {
     };
 
     render() {
-        return this.state.courseId === undefined ? <div>加载中</div> : <div className="p-c">
+        return this.state.courseId === undefined ? <div className="p-c"/> : <div className="p-c">
             <div className="co-scroll-view">
                 <div className="banner">
                     <picture className="c-media-blur-bg co-ximg-cover">
@@ -68,7 +67,8 @@ class CoursePage extends React.Component {
                                 <div className="subname">{this.state.subtitle}</div>
                             </div>
                             <div className="tag-list">
-                                {this.state.tags.map((tag, index) => <div key={index} className="c-course-tag-item">{tag}</div>)}
+                                {this.state.tags.map((tag, index) => <div key={index}
+                                                                          className="c-course-tag-item">{tag}</div>)}
                             </div>
                         </div>
                         <div className="right">

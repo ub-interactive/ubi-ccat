@@ -8,7 +8,7 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
 
-        const cachedState = sessionStorage.getItem(this.SessionStorageKey);
+        const cachedState = localStorage.getItem(this.SessionStorageKey);
         this.state = cachedState ? JSON.parse(cachedState) : {
             keyword: undefined,
             history: []
@@ -17,10 +17,6 @@ class SearchBar extends React.Component {
 
     componentDidMount() {
         this.onKeywordChange(this.state.keyword, 100)
-    }
-
-    componentWillUnmount() {
-        sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state))
     }
 
     onInputValueChange = (e) => {
@@ -35,6 +31,7 @@ class SearchBar extends React.Component {
             keyword && this.setState((prevState, props) => ({
                 history: [...new Set([keyword, ...prevState.history])].slice(0, 7)
             }));
+            localStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state));
             this.props.onKeywordChange && this.props.onKeywordChange(keyword)
         }, timeout || 1000);
     };
