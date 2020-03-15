@@ -1,6 +1,7 @@
 import React from 'react';
 import './CoursePage.css';
-import ScrollableAnchor from 'react-scrollable-anchor'
+import ScrollableAnchor from 'react-scrollable-anchor';
+import {Link} from "react-router-dom";
 
 class CoursePage extends React.Component {
 
@@ -9,7 +10,7 @@ class CoursePage extends React.Component {
         this.state = {
             currentTab: 0,
             fixedTabBar: false
-        }
+        };
     }
 
     componentDidMount() {
@@ -36,7 +37,7 @@ class CoursePage extends React.Component {
         this.setState({
             fixedTabBar: window.pageYOffset >= (cInfo.offsetTop + cInfo.offsetHeight),
             currentTab: window.pageYOffset >= courseIntro.offsetTop ? window.pageYOffset >= courseMenu.offsetTop ? window.pageYOffset >= courseInfo.offsetTop ? 2 : 1 : 0 : 0
-        })
+        });
     };
 
     render() {
@@ -55,7 +56,7 @@ class CoursePage extends React.Component {
                         </div>
                         <div className="audio-disk">
                             <div className="audio-disk-ent"
-                                 style={{"background-image": `url(&quot;${this.state.coverUrl}&quot;)`}}/>
+                                 style={{backgroundImage: `url(&quot;${this.state.coverUrl}&quot;)`}}/>
                         </div>
                     </div>
                 </div>
@@ -67,14 +68,14 @@ class CoursePage extends React.Component {
                                 <div className="subname">{this.state.subtitle}</div>
                             </div>
                             <div className="tag-list">
-                                {this.state.tags.map(tag => <div key={tag} className="c-course-tag-item">{tag}</div>)}
+                                {this.state.tags.map((tag, index) => <div key={index} className="c-course-tag-item">{tag}</div>)}
                             </div>
                         </div>
                         <div className="right">
                             <div className="info-money">
                                 <div className="cur">￥<b>{this.state.promotionPrice / 100}</b></div>
                                 <div className="origin">原价￥<span
-                                    style={{"text-decoration": "line-through"}}>{this.state.price / 100}</span>
+                                    style={{textDecoration: "line-through"}}>{this.state.price / 100}</span>
                                 </div>
                             </div>
                         </div>
@@ -90,6 +91,7 @@ class CoursePage extends React.Component {
                            className={`co-tab-view-tab ${this.state.currentTab === 2 ? "current" : ""}`}><span>课程须知</span></a>
                     </div>
                 </div>
+                <div className="co-tab-view-placeholder" style={{display: this.state.fixedTabBar ? "block" : "none"}}/>
                 <ScrollableAnchor id="course-intro">
                     <div className="course-intro" dangerouslySetInnerHTML={{__html: this.state.courseIntro}}/>
                 </ScrollableAnchor>
@@ -102,10 +104,10 @@ class CoursePage extends React.Component {
                 <div className="footer-placeholder"/>
             </div>
             <div className="footer">
-                <a className="btn-home" href="/">
+                <Link className="btn-home" to={"/"}>
                     <div className="icon"/>
                     <div className="name">首页</div>
-                </a>
+                </Link>
                 <div className="btns">
                     <div className="btn">
                         <div>立即购买</div>
