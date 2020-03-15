@@ -32,8 +32,8 @@ class BottomDetector extends React.Component {
         const hasMore = this.props.hasMore === undefined ? true : this.props.hasMore;
         const isLoading = this.props.isLoading === undefined ? false : this.props.isLoading;
         return <div className="co-load-status">
-            {!hasMore && "没有更多了"}
-            {isLoading && "加载中"}
+            {!hasMore && "- 没有更多了 -"}
+            {isLoading && "加载中···"}
         </div>
     }
 }

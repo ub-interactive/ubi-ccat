@@ -5,6 +5,7 @@ import SubjectPage from "./routes/SubjectPage/SubjectPage";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import CoursePage from "./routes/CoursePage/CoursePage";
 import SearchPage from "./routes/SearchPage/SearchPage";
+import PurchasedPage from "./routes/PurchasedPage/PurchasedPage";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/s/:subjectId" component={SubjectPage}/>
                 <Route path="/c/:courseId" component={CoursePage}/>
                 <Route path="/search" component={SearchPage}/>
+                <Route path="/purchased" component={PurchasedPage}/>
             </Switch>
         </Router>
     );

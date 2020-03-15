@@ -145,7 +145,8 @@ class HomePage extends React.Component {
                 </div>
                 <BottomDetector onPageBottom={this.loadMore} hasMore={this.state.hasMore}
                                 isLoading={this.state.isLoading}/>
-                <Footer/>
+
+                <Footer selected="index"/>
             </div>
         );
     }
