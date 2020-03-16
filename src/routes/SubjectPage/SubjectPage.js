@@ -3,8 +3,11 @@ import './SubjectPage.css';
 import Subject from "../../components/Subject/Subject";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
 import Footer from "../../components/Footer/Footer";
+import WsService from "../../components/WsService/WsService";
 
 class SubjectPage extends React.Component {
+
+    wsService = new WsService();
 
     PageSize = 8;
 
@@ -27,20 +30,19 @@ class SubjectPage extends React.Component {
 
     loadMore = () => {
         if (this.state.hasMore && !this.state.isLoading) {
-            const url = `http://10.0.0.5:9000/api/web/s/${this.props.match.params.subjectId}?page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
             this.setState((prevState, props) => ({
                 isLoading: true
             }));
-            fetch(url)
-                .then(res => res.json())
-                .then(result => this.setState((prevState, props) => ({
-                    ...result.data,
+            this.wsService.subjectPageGet(this.props.match.params.subjectId, this.state.currPage, this.PageSize, data => {
+                this.setState((prevState, props) => ({
+                    ...data,
                     currPage: prevState.currPage + 1,
-                    hasMore: prevState.currPage < result.data.page.pages,
+                    hasMore: prevState.currPage < data.page.pages,
                     isLoading: false,
-                    courses: [...prevState.courses, ...result.data.courses]
-                })))
-                .then(r => sessionStorage.setItem(this.SessionStorageKey(this.props.match.params.subjectId), JSON.stringify(this.state)));
+                    courses: [...prevState.courses, ...data.courses]
+                }));
+                sessionStorage.setItem(this.SessionStorageKey(this.props.match.params.subjectId), JSON.stringify(this.state))
+            });
         }
     };
 
