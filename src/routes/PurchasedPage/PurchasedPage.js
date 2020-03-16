@@ -3,8 +3,11 @@ import Footer from "../../components/Footer/Footer";
 import "./PurchasedPage.css";
 import Subject from "../../components/Subject/Subject";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
+import WsService from "../../components/WsService/WsService";
 
 class PurchasedPage extends React.Component {
+
+    wsService = new WsService();
 
     PageSize = 1;
 
@@ -27,19 +30,18 @@ class PurchasedPage extends React.Component {
 
     loadMore = () => {
         if (this.state.hasMore && !this.state.isLoading) {
-            const url = `http://10.0.0.5:9000/api/web/h/s?page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
             this.setState((prevState, props) => ({
                 isLoading: true
             }));
-            fetch(url)
-                .then(response => response.json())
-                .then(result => this.setState((prevState, props) => ({
+            this.wsService.homePageLoadMore(this.state.currPage, this.PageSize, data => {
+                this.setState((prevState, props) => ({
                     currPage: prevState.currPage + 1,
-                    hasMore: prevState.currPage < result.data.page.pages,
+                    hasMore: prevState.currPage < data.page.pages,
                     isLoading: false,
-                    subjects: [...prevState.subjects, ...result.data.subjects]
-                })))
-                .then(r => sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state)))
+                    subjects: [...prevState.subjects, ...data.subjects]
+                }));
+                sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state))
+            })
         }
     };
 

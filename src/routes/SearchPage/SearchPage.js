@@ -2,8 +2,11 @@ import * as React from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
 import Course from "../../components/Course/Course";
+import WsService from "../../components/WsService/WsService";
 
 class SearchPage extends React.Component {
+
+    wsService = new WsService();
 
     PageSize = 8;
 
@@ -33,18 +36,17 @@ class SearchPage extends React.Component {
 
     loadMore = () => {
         if (this.state.hasMore && !this.state.isLoading) {
-            const url = `http://10.0.0.5:9000/api/web/search?keyword=${this.state.keyword}&page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
             this.setState((prevState, props) => ({
                 isLoading: true
             }));
-            fetch(url)
-                .then(response => response.json())
-                .then(result => this.setState((prevState, props) => ({
+            this.wsService.searchPageSearch(this.state.keyword, this.state.currPage, this.PageSize, data => {
+                this.setState((prevState, props) => ({
                     currPage: prevState.currPage + 1,
-                    hasMore: prevState.currPage < result.data.page.pages,
+                    hasMore: prevState.currPage < data.page.pages,
                     isLoading: false,
-                    courses: [...prevState.courses, ...result.data.courses]
-                })))
+                    courses: [...prevState.courses, ...data.courses]
+                }))
+            });
         }
     };
 

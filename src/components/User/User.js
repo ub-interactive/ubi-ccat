@@ -14,12 +14,12 @@ class User extends React.Component {
         if (window.navigator.userAgent.toLowerCase().indexOf('micromessenger') === -1) {
             alert("用户未登录，请在微信内打开页面");
         } else {
-            const code = queryString.parse(this.props.location.search).code;
-            if (code) {
-                this.wsService.getUserInfo(result => this.props.withUserInfo && this.props.withUserInfo(result))
-            } else {
-                this.wsService.wechatGetAuthUrl(url => document.location = url)
-            }
+            // const code = queryString.parse(this.props.location.search).code;
+            // if (code) {
+            //     this.wsService.getUserInfo(result => this.props.withUserInfo && this.props.withUserInfo(result))
+            // } else {
+            //     this.wsService.wechatGetAuthUrl(url => document.location = url)
+            // }
         }
     }
 

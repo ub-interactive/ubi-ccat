@@ -28,6 +28,20 @@ class WsService {
             .then(result => callback(result.data))
     };
 
+    /** COURSE PAGE*/
+    coursePageGet = (courseId, callback) => {
+        const url = `http://10.0.0.5:9000/api/web/c/${courseId}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(result => callback(result.data))
+    };
+
+    /** SEARCH PAGE */
+    searchPageSearch = (keyword, currPage, pageSize, callback) => {
+        fetch(`http://10.0.0.5:9000/api/web/search?keyword=${keyword}&page.curr=${currPage}&page.size=${pageSize}`)
+            .then(response => response.json())
+            .then(result => callback(result.data))
+    }
 
 }
 

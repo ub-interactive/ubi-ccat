@@ -2,8 +2,11 @@ import React from 'react';
 import './CoursePage.css';
 import ScrollableAnchor from 'react-scrollable-anchor';
 import {Link} from "react-router-dom";
+import WsService from "../../components/WsService/WsService";
 
 class CoursePage extends React.Component {
+
+    wsService = new WsService();
 
     constructor(props) {
         super(props);
@@ -14,13 +17,12 @@ class CoursePage extends React.Component {
     }
 
     componentDidMount() {
-        const url = `http://10.0.0.5:9000/api/web/c/${this.props.match.params.courseId}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(result => this.setState((prevState, props) => ({
-                ...result.data
-            })))
-            .then(r => window.addEventListener("scroll", this.handleScroll))
+        this.wsService.coursePageGet(this.props.match.params.courseId, data => {
+            this.setState({
+                ...data
+            });
+            window.addEventListener("scroll", this.handleScroll)
+        });
     }
 
     componentWillUnmount() {
