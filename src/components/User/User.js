@@ -1,23 +1,25 @@
 import React from "react";
 import queryString from 'query-string';
+import WsService from "../WsService/WsService";
 
 class User extends React.Component {
+
+    wsService = new WsService();
 
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        const code = queryString.parse(this.props.location.search).code;
-        if (code) {
-            fetch(`http://localhost:9000/api/web/wechat/get-user-info?code=${code}`)
-                .then(resp => resp.json())
-                .then(result => this.props.withUserInfo && this.props.withUserInfo(result.data))
+        if (window.navigator.userAgent.toLowerCase().indexOf('micromessenger') === -1) {
+            alert("用户未登录，请在微信内打开页面");
         } else {
-            fetch(`http://localhost:9000/api/web/wechat/get-auth-url?redirect_url=${document.location.href}`)
-                .then(resp => resp.json())
-                .then(result => result.data.url)
-                .then(url => document.location = url);
+            const code = queryString.parse(this.props.location.search).code;
+            if (code) {
+                this.wsService.getUserInfo(result => this.props.withUserInfo && this.props.withUserInfo(result))
+            } else {
+                this.wsService.wechatGetAuthUrl(url => document.location = url)
+            }
         }
     }
 

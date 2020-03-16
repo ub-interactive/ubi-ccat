@@ -16,8 +16,11 @@ import BottomDetector from "../../components/BottomDetector/BottomDetector";
 import Footer from "../../components/Footer/Footer";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import User from "../../components/User/User";
+import WsService from "../../components/WsService/WsService";
 
 class HomePage extends React.Component {
+
+    wsService = new WsService();
 
     PageSize = 1;
 
@@ -36,27 +39,26 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://10.0.0.5:9000/api/web/h")
-            .then(response => response.json())
-            .then(result => this.setState((prevState, props) => ({...result.data})))
-            .then(r => this.loadMore())
+        this.wsService.homePageGetInfo(data => {
+            this.setState({...data});
+            this.loadMore()
+        })
     }
 
     loadMore = () => {
         if (this.state.hasMore && !this.state.isLoading) {
-            const url = `http://10.0.0.5:9000/api/web/h/s?page.curr=${this.state.currPage}&page.size=${this.PageSize}`;
             this.setState((prevState, props) => ({
                 isLoading: true
             }));
-            fetch(url)
-                .then(response => response.json())
-                .then(result => this.setState((prevState, props) => ({
+            this.wsService.homePageLoadMore(this.state.currPage, this.PageSize, data => {
+                this.setState((prevState, props) => ({
                     currPage: prevState.currPage + 1,
-                    hasMore: prevState.currPage < result.data.page.pages,
+                    hasMore: prevState.currPage < data.page.pages,
                     isLoading: false,
-                    subjects: [...prevState.subjects, ...result.data.subjects]
-                })))
-                .then(r => sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state)))
+                    subjects: [...prevState.subjects, ...data.subjects]
+                }));
+                sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state))
+            })
         }
     };
 
