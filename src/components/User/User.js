@@ -16,7 +16,7 @@ class User extends React.Component {
         } else {
             const code = queryString.parse(this.props.location.search).code;
             if (code) {
-                this.wsService.getUserInfo(code, result => this.props.withUserInfo && this.props.withUserInfo(result))
+                this.wsService.wechatGetUserInfo(code, result => this.props.withUserInfo && this.props.withUserInfo(result))
             } else {
                 this.wsService.wechatGetAuthUrl(document.location, url => document.location = url)
             }

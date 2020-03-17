@@ -3,16 +3,16 @@ class WsService {
     gateway = "http://localhost:9000/api/web";
 
     /** USER */
-    getUserInfo = (code, callback) => {
-        fetch(`${this.gateway}/wechat/get-user-info?code=${code}`)
-            .then(resp => resp.json())
-            .then(result => callback(result.data))
-    };
-
     wechatGetAuthUrl = (redirectUrl, callback) => {
-        fetch(`${this.gateway}/wechat/get-auth-url?redirect_url=${redirectUrl}`)
+        fetch(`${this.gateway}/user/get-wechat-auth-url?redirect_url=${redirectUrl}`)
             .then(resp => resp.json())
             .then(result => callback(result.data.url))
+    };
+
+    wechatGetUserInfo = (code, callback) => {
+        fetch(`${this.gateway}/user/get-wechat-user-info?code=${code}`)
+            .then(resp => resp.json())
+            .then(result => callback(result.data))
     };
 
     /** HOME PAGE */
