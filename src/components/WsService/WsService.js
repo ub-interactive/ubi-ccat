@@ -1,6 +1,6 @@
 class WsService {
 
-    gateway = "http://localhost:9000/api/web";
+    gateway = "https://www.youbohudong.com/api/web";
 
     /** USER */
     wechatGetAuthUrl = (redirectUrl, callback) => {
