@@ -8,15 +8,30 @@ class User extends React.Component {
 
     constructor(props) {
         super(props);
-    }
+        this.state = {
+            openId: null,
+            nickname: null,
+            gender: null,
+            language: null,
+            city: null,
+            province: null,
+            country: null,
+            avatarUrl: null
+        }
+    };
 
-    componentDidMount() {
-        if (window.navigator.userAgent.toLowerCase().indexOf('micromessenger') === -1) {
-            alert("用户未登录，请在微信内打开页面");
-        } else {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!prevProps.authenticate && this.props.authenticate) {
             const code = queryString.parse(this.props.location.search).code;
-            if (code) {
-                this.wsService.wechatGetUserInfo(code, result => this.props.withUserInfo && this.props.withUserInfo(result))
+            if (window.navigator.userAgent.toLowerCase().indexOf('micromessenger') === -1) {
+                alert("用户未登录，请在微信内打开页面");
+            } else if (this.state.openId) {
+                this.props.onUserInfo(this.state)
+            } else if (code) {
+                this.wsService.wechatGetUserInfo(code, result => {
+                    this.setState({...result.data});
+                    this.props.onUserInfo(this.state)
+                })
             } else {
                 this.wsService.wechatGetAuthUrl(document.location, url => document.location = url)
             }

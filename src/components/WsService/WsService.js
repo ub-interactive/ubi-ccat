@@ -1,6 +1,6 @@
 class WsService {
 
-    gateway = "https://www.youbohudong.com/api/web";
+    gateway = process.env.REACT_APP_GATEWAY;
 
     /** USER */
     wechatGetAuthUrl = (redirectUrl, callback) => {

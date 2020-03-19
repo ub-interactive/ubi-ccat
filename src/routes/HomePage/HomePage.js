@@ -29,7 +29,9 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props);
         const cachedState = sessionStorage.getItem(this.SessionStorageKey);
-        this.state = cachedState ? JSON.parse(cachedState) : {
+        // this.state = cachedState ? JSON.parse(cachedState) : {
+        this.state = {
+            authenticate: false,
             currPage: 1,
             hasMore: true,
             isLoading: false,
@@ -47,11 +49,13 @@ class HomePage extends React.Component {
 
     loadMore = () => {
         if (this.state.hasMore && !this.state.isLoading) {
-            this.setState((prevState, props) => ({
+            this.setState({authenticate: true});
+
+            this.setState({
                 isLoading: true
-            }));
+            });
             this.wsService.homePageLoadMore(this.state.currPage, this.PageSize, data => {
-                this.setState((prevState, props) => ({
+                this.setState((prevState) => ({
                     currPage: prevState.currPage + 1,
                     hasMore: prevState.currPage < data.page.pages,
                     isLoading: false,
@@ -60,6 +64,10 @@ class HomePage extends React.Component {
                 sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state))
             })
         }
+    };
+
+    onUserInfo = (userInfo) => {
+        alert(userInfo.openId);
     };
 
     render() {
@@ -139,7 +147,8 @@ class HomePage extends React.Component {
 
         return (
             <div className="p-index">
-                <User {...this.props}/>
+                <User location={this.props.location} onUserInfo={this.onUserInfo}
+                      authenticate={this.state.authenticate}/>
                 <div className="co-scroll-view">
                     <Link to="/search"><SearchBar isPlaceHolder/></Link>
                     {slider}
