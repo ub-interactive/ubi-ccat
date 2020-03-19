@@ -6,16 +6,11 @@ class UserService {
 
     wsService = new WsService();
 
-    USER_SERVICE_WECHAT_CODE_KEY = "USER_SERVICE_WECHAT_CODE";
     getWechatUserInfo = (location, callback) => {
         const code = queryString.parse(location.search).code;
-        const cachedCodeJson = sessionStorage.getItem(this.USER_SERVICE_WECHAT_CODE_KEY);
-        const cachedCodes = cachedCodeJson !== undefined ? JSON.parse(cachedCodeJson) : [];
-
         if (window.navigator.userAgent.toLowerCase().indexOf('micromessenger') === -1) {
             alert("用户未登录，请在微信内打开页面");
-        } else if (code && cachedCodes.indexOf(code) === -1) {
-            sessionStorage.setItem(this.USER_SERVICE_WECHAT_CODE_KEY, JSON.stringify([...cachedCodes, code]));
+        } else if (code) {
             this.wsService.wechatGetUserInfo(code, callback)
         } else {
             this.wsService.wechatGetAuthUrl(document.location, url => document.location = url)
