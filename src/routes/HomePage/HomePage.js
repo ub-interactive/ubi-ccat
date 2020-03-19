@@ -15,12 +15,13 @@ import {Link} from "react-router-dom";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
 import Footer from "../../components/Footer/Footer";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import User from "../../components/User/User";
-import WsService from "../../components/WsService/WsService";
+import WsService from "../../services/WsService";
+import UserService from "../../services/UserService";
 
 class HomePage extends React.Component {
 
     wsService = new WsService();
+    userService = new UserService();
 
     PageSize = 1;
 
@@ -40,6 +41,9 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
+        this.userService.getWechatUserInfo(this.props.location, userInfo => {
+            alert(userInfo.openId);
+        });
         this.wsService.homePageGetInfo(data => {
             this.setState({...data});
             this.loadMore()

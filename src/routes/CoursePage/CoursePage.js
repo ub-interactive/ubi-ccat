@@ -2,7 +2,7 @@ import React from 'react';
 import './CoursePage.css';
 import ScrollableAnchor from 'react-scrollable-anchor';
 import {Link} from "react-router-dom";
-import WsService from "../../components/WsService/WsService";
+import WsService from "../../services/WsService";
 
 class CoursePage extends React.Component {
 

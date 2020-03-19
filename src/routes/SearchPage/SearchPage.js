@@ -2,7 +2,7 @@ import * as React from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
 import Course from "../../components/Course/Course";
-import WsService from "../../components/WsService/WsService";
+import WsService from "../../services/WsService";
 
 class SearchPage extends React.Component {
 

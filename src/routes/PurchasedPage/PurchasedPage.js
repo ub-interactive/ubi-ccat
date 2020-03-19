@@ -3,7 +3,7 @@ import Footer from "../../components/Footer/Footer";
 import "./PurchasedPage.css";
 import Subject from "../../components/Subject/Subject";
 import BottomDetector from "../../components/BottomDetector/BottomDetector";
-import WsService from "../../components/WsService/WsService";
+import WsService from "../../services/WsService";
 
 class PurchasedPage extends React.Component {
 

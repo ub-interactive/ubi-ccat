@@ -1,8 +1,8 @@
 import React from "react";
 import queryString from 'query-string';
-import WsService from "../WsService/WsService";
+import WsService from "../services/WsService";
 
-class User {
+class UserService {
 
     wsService = new WsService();
 
@@ -19,4 +19,4 @@ class User {
 
 }
 
-export default User
+export default UserService
