@@ -12,7 +12,7 @@ class WsService {
             if (!resp.ok) {
                 throw new Error('Network response was not ok')
             } else {
-                resp.json()
+                return resp.json()
             }
         })
         .then(result => {
@@ -36,7 +36,7 @@ class WsService {
             if (!resp.ok) {
                 throw new Error('Network response was not ok')
             } else {
-                resp.json()
+                return resp.json()
             }
         })
         .then(result => {
