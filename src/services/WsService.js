@@ -35,9 +35,9 @@ class WsService {
         this.get(`${this.gateway}/user/get-wechat-user-info?code=${code}`, callback)
     };
 
-    createUser = (userInfo, callback) => {
-        this.post(`${this.gateway}/user/get-wechat-user-`)
-    }
+    createUser = (mobile, openId, callback) => {
+        this.post(`${this.gateway}/user/create-user`,{mobile, openId}, callback)
+    };
 
     /** HOME PAGE */
     homePageGetInfo = (callback) => {

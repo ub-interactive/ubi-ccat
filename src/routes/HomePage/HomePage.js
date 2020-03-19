@@ -41,7 +41,7 @@ class HomePage extends React.Component {
 
     componentDidMount() {
         this.userService.getWechatUserInfo(this.props.location, userInfo => {
-            alert(userInfo.openId);
+            this.wsService.createUser("18600094776", userInfo.openId, alert("user created"));
         });
         this.wsService.homePageGetInfo(data => {
             this.setState({...data});
