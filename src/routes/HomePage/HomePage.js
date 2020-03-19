@@ -146,8 +146,6 @@ class HomePage extends React.Component {
 
         return (
             <div className="p-index">
-                <User location={this.props.location} onUserInfo={this.onUserInfo}
-                      authenticate={this.state.authenticate}/>
                 <div className="co-scroll-view">
                     <Link to="/search"><SearchBar isPlaceHolder/></Link>
                     {slider}

@@ -4,6 +4,25 @@ class WsService {
 
     get = (url, callback) => fetch(url)
         .then(resp => resp.json())
+        .then(result => {
+            if (result.code === "ok") {
+                return callback(result.data)
+            } else {
+                console.log(result.error);
+                alert(result.error)
+            }
+        })
+        .catch(error => console.log(error));
+
+    post = (url, body, callback) => fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+        .then(resp => resp.json())
         .then(result => callback(result.data))
         .catch(error => console.log(error));
 
@@ -15,6 +34,10 @@ class WsService {
     wechatGetUserInfo = (code, callback) => {
         this.get(`${this.gateway}/user/get-wechat-user-info?code=${code}`, callback)
     };
+
+    createUser = (userInfo, callback) => {
+        this.post(`${this.gateway}/user/get-wechat-user-`)
+    }
 
     /** HOME PAGE */
     homePageGetInfo = (callback) => {
