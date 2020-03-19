@@ -21,7 +21,7 @@ import UserService from "../../services/UserService";
 class HomePage extends React.Component {
 
     wsService = new WsService();
-    userService = new UserService();
+    // userService = new UserService();
 
     PageSize = 1;
 
@@ -67,10 +67,6 @@ class HomePage extends React.Component {
                 sessionStorage.setItem(this.SessionStorageKey, JSON.stringify(this.state))
             })
         }
-    };
-
-    onUserInfo = (userInfo) => {
-        alert(userInfo.openId);
     };
 
     render() {
