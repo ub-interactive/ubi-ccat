@@ -1,18 +1,18 @@
 class WsService {
 
     gateway = process.env.REACT_APP_GATEWAY;
+    isWechatBrowser = window.navigator.userAgent.toLowerCase().indexOf('micromessenger') > -1;
+
+    debug = (msg) => {
+        this.isWechatBrowser ? alert(msg) : console.log(msg)
+    };
 
     get = (url, callback) => fetch(url)
-        .then(resp => resp.json())
+        .then(resp => resp.json(), error => this.debug(error))
         .then(result => {
-            if (result.code === "ok") {
-                return callback(result.data)
-            } else {
-                console.log(result.error);
-                alert(result.error)
-            }
+            if (result.code === "ok") return callback(result.data); else this.debug(result.error)
         })
-        .catch(error => console.log(error));
+        .catch(error => this.debug(error));
 
     post = (url, body, callback) => fetch(url, {
         method: 'POST',
@@ -20,11 +20,13 @@ class WsService {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify({data: body})
     })
-        .then(resp => resp.json())
-        .then(result => callback(result.data))
-        .catch(error => console.log(error));
+        .then(resp => resp.json(), error => this.debug(error))
+        .then(result => {
+            if (result.code === "ok") return callback(result.data); else this.debug(result.error)
+        })
+        .catch(error => this.debug(error));
 
     /** USER */
     wechatGetAuthUrl = (redirectUrl, callback) => {
@@ -36,7 +38,7 @@ class WsService {
     };
 
     createUser = (mobile, openId, callback) => {
-        this.post(`${this.gateway}/user/create-user`,{mobile, openId}, callback)
+        this.post(`${this.gateway}/user/create-user`, {mobile, openId}, callback)
     };
 
     /** HOME PAGE */

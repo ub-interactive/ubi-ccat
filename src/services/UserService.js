@@ -7,8 +7,8 @@ class UserService {
     wsService = new WsService();
 
     USER_SERVICE_WECHAT_CODE_KEY = "USER_SERVICE_WECHAT_CODE";
-    getWechatUserInfo = (location, callback) => {
-        const code = queryString.parse(location.search).code;
+    getWechatUserInfo = (callback) => {
+        const code = queryString.parse(document.location).code;
         const cachedCodeJson = sessionStorage.getItem(this.USER_SERVICE_WECHAT_CODE_KEY);
         const cachedCodes = cachedCodeJson !== undefined ? JSON.parse(cachedCodeJson) : [];
 
