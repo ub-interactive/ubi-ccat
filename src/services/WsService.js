@@ -8,13 +8,7 @@ class WsService {
     };
 
     get = (url, callback) => fetch(url)
-        .then(resp => {
-            if (!resp.ok) {
-                throw new Error('Network response was not ok')
-            } else {
-                return resp.json()
-            }
-        })
+        .then(resp => resp.json())
         .then(result => {
             if (result.code === "ok") {
                 callback(result.data)
@@ -32,13 +26,7 @@ class WsService {
         },
         body: JSON.stringify({data: body})
     })
-        .then(resp => {
-            if (!resp.ok) {
-                throw new Error('Network response was not ok')
-            } else {
-                return resp.json()
-            }
-        })
+        .then(resp => resp.json())
         .then(result => {
             if (result.code === "ok") {
                 callback(result.data)
