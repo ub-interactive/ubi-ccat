@@ -40,9 +40,9 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        this.userService.getWechatUserInfo(this.props.location,userInfo => {
-            this.wsService.createUser("18600094776", userInfo.openId, alert("user created"));
-        });
+        // this.userService.getWechatUserInfo(this.props.location,userInfo => {
+        //     this.wsService.createUser("18600094776", userInfo.openId, alert("user created"));
+        // });
         this.wsService.homePageGetInfo(data => {
             this.setState({...data});
             this.loadMore()
