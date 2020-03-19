@@ -10,7 +10,7 @@ class WsService {
     get = (url, callback) => fetch(url)
         .then(resp => resp.json(), error => this.debug(error))
         .then(result => {
-            if (result.code === "ok") return callback(result.data); else this.debug(result.error)
+            if (result && result.code === "ok") return callback(result.data); else this.debug(result.error)
         })
         .catch(error => this.debug(error));
 
@@ -24,7 +24,7 @@ class WsService {
     })
         .then(resp => resp.json(), error => this.debug(error))
         .then(result => {
-            if (result.code === "ok") return callback(result.data); else this.debug(result.error)
+            if (result && result.code === "ok") return callback(result.data); else this.debug(result.error)
         })
         .catch(error => this.debug(error));
 
