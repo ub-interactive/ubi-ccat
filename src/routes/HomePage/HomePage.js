@@ -29,8 +29,7 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props);
         const cachedState = sessionStorage.getItem(this.SessionStorageKey);
-        // this.state = cachedState ? JSON.parse(cachedState) : {
-        this.state = {
+        this.state = cachedState ? JSON.parse(cachedState) : {
             authenticate: false,
             currPage: 1,
             hasMore: true,
