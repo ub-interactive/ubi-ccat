@@ -8,8 +8,20 @@ class WsService {
     };
 
     get = (url, callback) => fetch(url)
-        .then(resp => !resp.ok ? throw new Error('Network response was not ok') : resp.json())
-        .then(result => result.code === "ok" ? callback(result.data) : this.debug(result.error))
+        .then(resp => {
+            if (!resp.ok) {
+                throw new Error('Network response was not ok')
+            } else {
+                resp.json()
+            }
+        })
+        .then(result => {
+            if (result.code === "ok") {
+                callback(result.data)
+            } else {
+                throw new Error(result.error)
+            }
+        })
         .catch(error => this.debug(error));
 
     post = (url, body, callback) => fetch(url, {
@@ -20,8 +32,20 @@ class WsService {
         },
         body: JSON.stringify({data: body})
     })
-        .then(resp => !resp.ok ? throw new Error('Network response was not ok') : resp.json())
-        .then(result => result.code === "ok" ? callback(result.data) : this.debug(result.error))
+        .then(resp => {
+            if (!resp.ok) {
+                throw new Error('Network response was not ok')
+            } else {
+                resp.json()
+            }
+        })
+        .then(result => {
+            if (result.code === "ok") {
+                callback(result.data)
+            } else {
+                throw new Error(result.error)
+            }
+        })
         .catch(error => this.debug(error));
 
     /** USER */
